@@ -59,7 +59,7 @@ namespace NZWalks.API.Controllers
         // GET: https://localhost:1234/api/Regions/{Id}
         [HttpGet]
         [Route("{id:Guid}")]
-        //[Authorize(Roles = "Reader")]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             // Get RegionDomain data based on Id from the Database
@@ -78,7 +78,7 @@ namespace NZWalks.API.Controllers
         // Post: https://localhost:1223/api/regions
         [HttpPost]
         [ValidateModelAttribute]
-        //[Authorize(Roles = "Writer")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto requestDto)
         {
            
@@ -110,7 +110,7 @@ namespace NZWalks.API.Controllers
         [HttpPut]
         [Route("{id:Guid}")]
         [ValidateModelAttribute]
-        //[Authorize(Roles = "Writer")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRequestDto)
         {
             
@@ -139,7 +139,7 @@ namespace NZWalks.API.Controllers
         //----------------------- DELETE METHOD ----------------------
         [HttpDelete]
         [Route("{id:Guid}")]
-        //[Authorize(Roles = "Writer")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             // Find the region in the database
