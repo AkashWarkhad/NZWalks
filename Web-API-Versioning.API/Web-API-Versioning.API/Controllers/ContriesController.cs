@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Web_API_Versioning.API.Models.Domain;
 
 namespace Web_API_Versioning.API.Controllers
@@ -10,7 +9,7 @@ namespace Web_API_Versioning.API.Controllers
     [ApiVersion("2.0")]
     public class ContriesController : ControllerBase
     {
-        // Version V1
+        // --------------------------- Version V1 with Country -------------------------------------
         [HttpGet]
         [MapToApiVersion("1.0")]
         public IActionResult GetV1()
@@ -32,7 +31,7 @@ namespace Web_API_Versioning.API.Controllers
             return Ok(countryDto);
         }
 
-        // Version V2
+        // -------------------------------------- Version V2 with Country name ---------------------------------------
         [HttpGet]
         [MapToApiVersion("2.0")]
         public IActionResult GetV2()
