@@ -35,7 +35,7 @@ builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-// Configuartion to display the Authentication on the Swagger Page
+// Auth-5 => Configuartion to display the Authentication on the Swagger Page
 builder.Services.AddSwaggerGen(opt=>
 {
     opt.SwaggerDoc("v1", new OpenApiInfo
@@ -75,7 +75,7 @@ builder.Services.AddSwaggerGen(opt=>
 builder.Services.AddDbContext<NZWalksDbContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalksConnectionString")));
 
-// Registration of NZWalksAuthDbContext
+// Auth-3 => Registration of NZWalksAuthDbContext
 builder.Services.AddDbContext<NZWalksAuthDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalkAuthConnectionString")));
 
@@ -89,7 +89,7 @@ builder.Services.AddScoped<IImageRepository, LocalImageRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
-// Register the Identity User
+// Auth-4 => Register the Identity User
 builder.Services.AddIdentityCore<IdentityUser>()
     .AddRoles<IdentityRole>()
     .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("NZWalks")
@@ -106,7 +106,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 });
 
-// Authentication Scheme
+// Auth-1 => Authentication Scheme
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt=> 
     opt.TokenValidationParameters = new TokenValidationParameters()
     {
@@ -132,7 +132,8 @@ app.UseMiddleware<ExceptionHandlerMiddelware>();
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); // Authenticate User before Authorize
+// Auth-2 => Authenticate User before Authorize
+app.UseAuthentication(); 
 app.UseAuthorization();
 
 // This is help to show the static images outside on the Web

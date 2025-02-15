@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.Models.DTO.Auth;
 using NZWalks.API.Repositories;
@@ -23,35 +22,48 @@ namespace NZWalks.API.Controllers
         // POST: https://localhost:7346/api/Auth/Register
         [HttpPost]
         [Route("Register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
+        public async Task<IActionResult> Register([FromBody] RegisterRequestDto regReqDto)
         {
-            if (registerRequestDto == null)
+            if (regReqDto == null)
             {
                 return BadRequest("Data should not be null");
             }
 
+
+            if (IsNotValidRoles(regReqDto.Roles))
+            {
+                return BadRequest("Provide correct roles information from (Reader/Writer) & only 2 entires alloweded!!!");
+            }
+
             var identityUser = new IdentityUser
             {
-                Email = registerRequestDto.Username,
-                UserName = registerRequestDto.Username
+                Email = regReqDto.Username,
+                UserName = regReqDto.Username
             };
 
-            var identityResult = await UserManager.CreateAsync(identityUser, registerRequestDto.Password);
+            // Crating a new identity User
+            var identityResult = await UserManager.CreateAsync(identityUser, regReqDto.Password);
 
             if (identityResult.Succeeded)
             {
-                if (registerRequestDto.Roles != null && registerRequestDto.Roles.Any())
+                if (regReqDto.Roles != null && regReqDto.Roles.Any())
                 {
-                    identityResult = await UserManager.AddToRolesAsync(identityUser, registerRequestDto.Roles);
+                    identityResult = await UserManager.AddToRolesAsync(identityUser, regReqDto.Roles);
 
                     if (identityResult.Succeeded)
                     {
                         return Ok("User is created successfully. Please Login..!");
                     }
+                    else if(identityResult.Errors.Any())
+                    {
+                        return BadRequest($"ErrorCode = {identityResult.Errors.First().Code}," +
+                            $" ErrorMessage = {identityResult.Errors.First().Description}");
+                    }
                 }
             }
 
-            return BadRequest("Something went wrong..!");
+            return BadRequest($"ErrorCode = {identityResult.Errors.First().Code}," +
+                            $" ErrorMessage = {identityResult.Errors.First().Description}");
         }
 
         // ------------------------------------ Login -------------------------------------------------
@@ -79,7 +91,7 @@ namespace NZWalks.API.Controllers
 
                         var response = new LoginResponseDto()
                         {
-                            JwtToken = JwtToken
+                            JwtToken = "Bearer " + JwtToken
                         };
 
                         return Ok(response);
@@ -88,6 +100,14 @@ namespace NZWalks.API.Controllers
             }
 
             return BadRequest("Username or Password is incorrect..!");
-        }    
+        }
+
+        private static bool IsNotValidRoles(string[] roles)
+        {
+            if (roles.Length == 0 || roles.Length > 2)
+                return true;
+
+            return !(roles.All(role => role.Contains("Reader") || role.Contains("Writer")));
+        }
     }
 }
