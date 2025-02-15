@@ -11,17 +11,20 @@ namespace NZWalks.API.Controllers
     public class ImagesController : ControllerBase
     {
         private readonly IImageRepository repository;
+        private readonly ILogger<ImagesController> logger;
 
-        public ImagesController(IImageRepository repository)
+        public ImagesController(IImageRepository repository, ILogger<ImagesController> logger)
         {
             this.repository = repository;
+            this.logger = logger;
         }
-       
+
         // -------------------------------------- Upload Image ------------------------------------------------
+        // POST : https://localhost:1234/api/Images/Upload
+
         [HttpPost]
         [Route("Upload")]
         [Authorize(Roles = "Writer")]
-        // POST : https://localhost:1234/api/Images/Upload
         public async Task<IActionResult> Upload([FromForm] ImageUploadRequestDto uploadImagesRequestDto)
         {
             ValidateFileUpload(uploadImagesRequestDto);
@@ -40,6 +43,7 @@ namespace NZWalks.API.Controllers
 
                 // Save the image in the DB
                 var savedImage = await repository.UploadImageAsync(imageDomainModel);
+                logger.LogInformation($"{savedImage.FileName} image successfully saved in the database");
 
                 if (savedImage == null) 
                 {

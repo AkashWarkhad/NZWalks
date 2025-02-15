@@ -40,7 +40,6 @@ namespace NZWalks.API.Repositories
             await dbContext.SaveChangesAsync();
 
             return image;
-
         }
     }
 }

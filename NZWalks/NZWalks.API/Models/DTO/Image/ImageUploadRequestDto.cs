@@ -11,6 +11,5 @@ namespace NZWalks.API.Models.DTO.Image
         public string FileName { get; set; }
 
         public string? FileDescription { get; set; }
-
     }
 }

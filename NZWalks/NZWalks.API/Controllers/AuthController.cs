@@ -11,11 +11,15 @@ namespace NZWalks.API.Controllers
     {
         private readonly UserManager<IdentityUser> UserManager;
         private readonly ITokenRepository tokenRepository;
+        public ILogger<AuthController> Logger { get; }
 
-        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepo)
+        public AuthController(UserManager<IdentityUser> userManager, 
+            ITokenRepository tokenRepo,
+            ILogger<AuthController> logger)
         {
             UserManager = userManager;
             tokenRepository = tokenRepo;
+            Logger = logger;
         }
 
         // -------------------------------------- Register --------------------------------------------
@@ -28,7 +32,6 @@ namespace NZWalks.API.Controllers
             {
                 return BadRequest("Data should not be null");
             }
-
 
             if (IsNotValidRoles(regReqDto.Roles))
             {
@@ -62,6 +65,7 @@ namespace NZWalks.API.Controllers
                 }
             }
 
+            Logger.LogError($"User: {regReqDto.Username} registration failed!!!");
             return BadRequest($"ErrorCode = {identityResult.Errors.First().Code}," +
                             $" ErrorMessage = {identityResult.Errors.First().Description}");
         }
@@ -94,6 +98,7 @@ namespace NZWalks.API.Controllers
                             JwtToken = "Bearer " + JwtToken
                         };
 
+                        Logger.LogInformation($"{loginRequestDto.Username} Successfully logged into the sysytem");
                         return Ok(response);
                     }
                 }

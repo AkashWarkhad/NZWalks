@@ -21,7 +21,7 @@ builder.Services.AddControllers();
 // Configure Serilog Logger in the Services
 var logger = new LoggerConfiguration()
     .WriteTo.Console()
-    .WriteTo.File("Logs/NzWalk_Log.txt", rollingInterval: RollingInterval.Minute)
+    //.WriteTo.File("Logs/NzWalk_Log.txt", rollingInterval: RollingInterval.Minute)   //<- Commenting file log generator
     .MinimumLevel.Information()
     .MinimumLevel.Warning()
     .MinimumLevel.Debug()
@@ -128,6 +128,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Configured Exception Handler Middelware
 app.UseMiddleware<ExceptionHandlerMiddelware>();
 
 app.UseHttpsRedirection();

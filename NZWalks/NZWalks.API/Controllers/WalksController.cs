@@ -15,11 +15,13 @@ namespace NZWalks.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IWalkRepository _walkRepository;
+        private readonly Logger<WalksController> logger;
 
-        public WalksController(IMapper mapper, IWalkRepository walkRepository)
+        public WalksController(IMapper mapper, IWalkRepository walkRepository, Logger<WalksController> logger)
         {
             _mapper = mapper;
             _walkRepository = walkRepository;
+            this.logger = logger;
         }
 
         // --------------------------Get All Method -------------------------------------------
@@ -45,6 +47,7 @@ namespace NZWalks.API.Controllers
 
             if (walksDomainModel == null)
             {
+                logger.LogWarning("Sorry to inconvenience record not found !!!");
                 return NotFound();
             }
 
