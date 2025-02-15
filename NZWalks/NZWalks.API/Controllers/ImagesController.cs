@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTO.Image;
@@ -11,14 +10,17 @@ namespace NZWalks.API.Controllers
     [ApiController]
     public class ImagesController : ControllerBase
     {
-        public IImageRepository Repository { get; }
+        private readonly IImageRepository repository;
+
         public ImagesController(IImageRepository repository)
         {
-            Repository = repository;
+            this.repository = repository;
         }
        
+        // -------------------------------------- Upload Image ------------------------------------------------
         [HttpPost]
         [Route("Upload")]
+        [Authorize(Roles = "Writer")]
         // POST : https://localhost:1234/api/Images/Upload
         public async Task<IActionResult> Upload([FromForm] ImageUploadRequestDto uploadImagesRequestDto)
         {
@@ -37,7 +39,7 @@ namespace NZWalks.API.Controllers
                 };
 
                 // Save the image in the DB
-                var savedImage = await Repository.UploadImageAsync(imageDomainModel);
+                var savedImage = await repository.UploadImageAsync(imageDomainModel);
 
                 if (savedImage == null) 
                 {

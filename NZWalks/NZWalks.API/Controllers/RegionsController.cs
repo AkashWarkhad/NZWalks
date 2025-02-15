@@ -11,55 +11,51 @@ using System.Text.Json;
 
 namespace NZWalks.API.Controllers
 {
-    //----------------------- GET METHODS -----------------------------
-
-    // https://localhost:PortNumber/api/Regions
     [Route("api/[controller]")]
     [ApiController]
     public class RegionsController : ControllerBase
     {
         private readonly IRegionRepository _regionRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger<RegionsController> logger;
+        private readonly ILogger<RegionsController> _logger;
 
-        public RegionsController
-            (NZWalksDbContext dbContext,
+        public RegionsController(
             IRegionRepository regionRepository,
             IMapper mapper,
             ILogger<RegionsController> logger)
         {
             _regionRepository = regionRepository;
             _mapper = mapper;
-            this.logger = logger;
+            _logger = logger;
         }
 
         // ----------------------------------------GET All Regions --------------------------------------------------------
         // GET: https://localhost:1234/api/Regions
         [HttpGet]
-        //[Authorize(Roles = "Reader")]
+        [Authorize(Roles = "Reader,Writer")]
         public async Task<ActionResult> GetAll()
         {
-            logger.LogInformation("Information :GetAll Action Method was invoked..");
-            logger.LogWarning("Warning : GetAll Action Method was invoked..");
-            logger.LogDebug("Debug :GetAll Action Method was invoked..");
-            logger.LogError("Error : GetAll Action Method was invoked..");
-
-            //throw new Exception("Something goes wrong");
+            _logger.LogInformation("Information :GetAll Action Method was invoked..");
+            _logger.LogWarning("Warning : GetAll Action Method was invoked..");
+            _logger.LogDebug("Debug :GetAll Action Method was invoked..");
+            _logger.LogError("Error : GetAll Action Method was invoked..");
 
             // Get the data from database in the domain models.
             var regionsDomain = await _regionRepository.GetAllAsync();
 
-            logger.LogInformation($"Successfully retrieved Regions data from the database : {JsonSerializer.Serialize(regionsDomain)}");
+            _logger.LogInformation($"Successfully retrieved Regions data from the database : {JsonSerializer.Serialize(regionsDomain)}");
+
             // Map domain models into Dto models & return Dto
             return Ok(_mapper.Map<List<RegionDto>>(regionsDomain));
         }
 
         //---------------------------------------- Get Region By Id ------------------------------------------------------------
         // Improve error handling
-        // GET: https://localhost:1234/api/Regions/{Id}
+        // GET: https://localhost:1234/api/Regions/Id
+
         [HttpGet]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Reader")]
+        [Authorize(Roles = "Reader,Writer")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             // Get RegionDomain data based on Id from the Database
@@ -76,12 +72,12 @@ namespace NZWalks.API.Controllers
 
         //----------------------- POST METHODS -----------------------------
         // Post: https://localhost:1223/api/regions
+        
         [HttpPost]
         [ValidateModelAttribute]
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto requestDto)
         {
-           
             // Map Dto models to Domain models
             var regionModel = _mapper.Map<Region>(requestDto);
 
@@ -107,6 +103,8 @@ namespace NZWalks.API.Controllers
         }
 
         //----------------------- PUT METHOD ---------------------------
+        // PUT: https://localhost:1223/api/regions/id
+
         [HttpPut]
         [Route("{id:Guid}")]
         [ValidateModelAttribute]
@@ -137,6 +135,8 @@ namespace NZWalks.API.Controllers
         }
 
         //----------------------- DELETE METHOD ----------------------
+        // DELETE https://localhost:1234/api/regions/id
+
         [HttpDelete]
         [Route("{id:Guid}")]
         [Authorize(Roles = "Writer")]

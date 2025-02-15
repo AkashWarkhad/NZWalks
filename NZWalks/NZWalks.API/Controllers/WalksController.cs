@@ -24,8 +24,9 @@ namespace NZWalks.API.Controllers
 
         // --------------------------Get All Method -------------------------------------------
         // GET: https://localhost:7285/api/Walks?filterOn=name&filterQuery=walks&sortBy=name&isAscending=true&pageNumber=1&pageSize=10
+
         [HttpGet]
-        [Authorize(Roles = "Reader")]
+        [Authorize(Roles = "Reader,Writer")]
         public async Task<IActionResult> GetAllWalks(
             [FromQuery] string? filterOn,
             [FromQuery] string? filterQuery,
@@ -53,10 +54,32 @@ namespace NZWalks.API.Controllers
             return Ok(walksDto);
         }
 
+        // ----------------------- Get Id Method --------------------------------------------------
+        // GET: https://localhost/7265/api/Walks/id
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+        [Authorize(Roles = "Reader,Writer")]
+        public async Task<IActionResult> GetWalksById([FromRoute] Guid id)
+        {
+            // Fetch the Data from the DB
+            var walksDomain = await _walkRepository.GetWalkByIdAsync(id);
+
+            if (walksDomain == null)
+            {
+                return NotFound();
+            }
+
+            // Convert Domain into DTO
+            var walksDto = _mapper.Map<WalkDto>(walksDomain);
+
+            return Ok(walksDto);
+        }
 
         // -------------------------- Post Method -------------------------------------------
         // Create a Walks 
         // POST : https://localhost:7285/api/Walks
+
         [HttpPost]
         [ValidateModelAttribute]
         [Authorize(Roles = "Writer")]
@@ -86,43 +109,19 @@ namespace NZWalks.API.Controllers
             return CreatedAtAction(nameof(GetWalksById), new { id = walkDto.Id }, walkDto);
         }
 
-
-        // ----------------------- Get Id Method --------------------------------------------------
-        // GET: https://localhost/7265/api/Walks/{id}
-        [HttpGet]
-        [Route("{id:Guid}")]
-        [Authorize(Roles = "Reader")]
-        public async Task<IActionResult> GetWalksById([FromRoute] Guid id)
-        {
-            // Fetch the Data from the DB
-            var walksDomain = await _walkRepository.GetWalkByIdAsync(id);
-
-            if(walksDomain == null)
-            {
-                return NotFound();
-            }
-
-            // Convert Domain into DTO
-            var walksDto = _mapper.Map<WalkDto>(walksDomain);
-
-            return Ok(walksDto);
-        }
-
-
         // ----------------------- Put Update Method -----------------------------------------------
-        // PUT: https://localhost:7265/api/Walks/{id}
+        // PUT: https://localhost:7265/api/Walks/id
+
         [HttpPut]
         [Route("{id:Guid}")]
         [Authorize(Roles = "Writer")]
         [ValidateModelAttribute]
         public async Task<IActionResult> UpdateWalkById([FromRoute] Guid id, [FromBody] UpdateWalkRequestsDto updateWalks)
         {
-            
             // Convert Dto to Domain models
             var walkDomainModel = _mapper.Map<Walk>(updateWalks);
 
             // Fetch the record & update the Walks data in the database
-
             var updatedWalk = await _walkRepository.UpdateWalkByIdAsync(id, walkDomainModel);
 
             if (updatedWalk == null)
@@ -135,7 +134,8 @@ namespace NZWalks.API.Controllers
         }
 
         //  ----------------------- Delete Method By Id ----------------------------------------------------
-        // DELETE: https://localhost:7265/api/Walks/{id}
+        // DELETE: https://localhost:7265/api/Walks/id
+
         [HttpDelete]
         [Route("{id:guid}")]
         [Authorize(Roles = "Writer")]
