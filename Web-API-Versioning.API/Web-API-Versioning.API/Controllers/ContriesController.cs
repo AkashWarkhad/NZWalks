@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Web_API_Versioning.API.Models.Domain;
+using Web_API_Versioning.API.Models.DTO;
 
 namespace Web_API_Versioning.API.Controllers
 {
