@@ -9,6 +9,7 @@ namespace NZWalks.UI.Controllers
     public class RegionsController : Controller
     {
         private readonly IHttpClientFactory httpClientFactory;
+
         public RegionsController(IHttpClientFactory httpClientFactory)
         {
             this.httpClientFactory = httpClientFactory;
