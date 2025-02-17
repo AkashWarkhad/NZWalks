@@ -24,7 +24,7 @@ builder.Services.AddVersionedApiExplorer(opt =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configure the Swagger options for vesrion
+// Configure the Swagger options for version
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 
 var app = builder.Build();
