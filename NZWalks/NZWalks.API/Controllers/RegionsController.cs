@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.CustomActionFilters;
-using NZWalks.API.Data;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTO;
 using NZWalks.API.Models.DTO.Regions;
@@ -35,6 +34,7 @@ namespace NZWalks.API.Controllers
         [Authorize(Roles = "Reader,Writer")]
         public async Task<ActionResult> GetAll()
         {
+            // Serilog Logger Types
             _logger.LogInformation("Information :GetAll Action Method was invoked..");
             _logger.LogWarning("Warning : GetAll Action Method was invoked..");
             _logger.LogDebug("Debug :GetAll Action Method was invoked..");

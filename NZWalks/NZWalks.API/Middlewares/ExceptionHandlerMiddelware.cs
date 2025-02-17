@@ -7,8 +7,7 @@ namespace NZWalks.API.Middlewares
         private readonly ILogger<ExceptionHandlerMiddelware> logger;
         private readonly RequestDelegate next;
 
-        public ExceptionHandlerMiddelware(ILogger<ExceptionHandlerMiddelware> logger,
-            RequestDelegate next)
+        public ExceptionHandlerMiddelware(ILogger<ExceptionHandlerMiddelware> logger, RequestDelegate next)
         {
             this.logger = logger;
             this.next = next;
