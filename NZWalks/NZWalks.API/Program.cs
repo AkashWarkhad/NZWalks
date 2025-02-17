@@ -11,6 +11,8 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.FileProviders;
 using Serilog;
 using NZWalks.API.Middlewares;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,6 +72,9 @@ builder.Services.AddSwaggerGen(opt=>
         }
     });
 });
+
+// Registering FluentValidator
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 // Registration of NZWalksDbContext
 builder.Services.AddDbContext<NZWalksDbContext>(options => 
