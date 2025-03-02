@@ -16,7 +16,7 @@ NZWalks allows users to **browse, search, and manage walking trails**, providing
 🔹 **Backend:** ASP.NET Core Web API, Entity Framework, PostgreSQL  
 🔹 **Frontend:** Angular, TypeScript, Bootstrap  
 🔹 **Authentication:** JWT, ASP.NET Identity  
-🔹 **DevOps:** Docker, Kubernetes, CI/CD Pipelines  
+🔹 **DevOps:** Azure  
 🔹 **Monitoring & Logging:** Serilog, Kibana  
 
 ## **🚀 Getting Started**  
