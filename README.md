@@ -1,23 +1,32 @@
-
 # **NZWalks 🏞️**  
-A **full-stack web application** built with **ASP.NET Core Web API** and **Controller View Model**, designed to help users explore and manage walking trails in New Zealand.  
+A **full-stack web application** built with **ASP.NET Core Web API (.NET 8)** and **ASP.NET MVC**, designed to help users explore and manage walking trails in New Zealand.  
 
 ## **📌 Project Overview**  
-NZWalks allows users to **browse, search, and manage walking trails**, providing key trail details, interactive maps, and secure authentication.  
+NZWalks allows users to **browse, search, and manage walking trails**, providing key trail details, interactive maps, and secure authentication. The project follows **RESTful API principles**, **best practices**, and **clean coding techniques** to ensure scalability and maintainability.  
 
 ## **✨ Features**  
-✅ **Browse & Search Trails** – View detailed information on various walking trails.  
-✅ **CRUD Operations** – Add, edit, and delete trails using a secure API.  
-✅ **Authentication & Authorization** – Secure access with JWT authentication.  
-✅ **Interactive Maps** – Visualize trails with an integrated mapping feature.  
-✅ **Responsive UI** – Built with Angular for a seamless experience on all devices.  
+✅ **Built using .NET 8** – Latest **ASP.NET Core Web API** for high-performance RESTful APIs.  
+✅ **ASP.NET MVC Frontend** – Consumes the API, providing an interactive user interface.  
+✅ **CRUD Operations with EF Core** – Uses **Entity Framework Core (Code-First approach)** for database interactions.  
+✅ **Repository Pattern & Domain-Driven Design (DDD)** – Enhances **code structure and maintainability**.  
+✅ **Data Validation** – Implements **FluentValidation** to ensure input integrity.  
+✅ **Authentication & Authorization** – Uses **JWT-based authentication** and **Role-Based Authorization** with **ASP.NET Core Identity**.  
+✅ **Filtering, Sorting, and Pagination** – Improves API usability and performance.  
+✅ **Automapper Integration** – Simplifies **object-to-object mapping** in API responses.  
+✅ **Swagger & Postman Testing** – API documentation and testing using **Swagger UI & Postman**.  
+✅ **Secure Deployment** – Deployed using **Azure**.  
+✅ **Logging** – **Serilog** for error tracking and debugging.  
 
 ## **🛠 Tech Stack**  
-🔹 **Backend:** ASP.NET Core Web API, Entity Framework, PostgreSQL  
-🔹 **Frontend:** Angular, TypeScript, Bootstrap  
-🔹 **Authentication:** JWT, ASP.NET Identity  
-🔹 **DevOps:** Azure  
-🔹 **Monitoring & Logging:** Serilog, Kibana  
+🔹 **Backend:** ASP.NET Core Web API (.NET 8), Entity Framework Core  
+🔹 **Frontend:** ASP.NET MVC  
+🔹 **Database:** PostgreSQL / SQL Server  
+🔹 **Architecture:** Repository Pattern, Domain-Driven Design (DDD)  
+🔹 **Authentication:** JWT, ASP.NET Core Identity, Role-Based Authorization  
+🔹 **Validation:** FluentValidation  
+🔹 **Utilities:** Automapper, Swagger, Postman  
+🔹 **Deployment & DevOps:** Azure
+🔹 **Monitoring & Logging:** Serilog
 
 ## **🚀 Getting Started**  
 
@@ -36,7 +45,7 @@ dotnet ef database update
 - Start the API:  
 ```bash
 dotnet run
-```   
+```
 
 ## **🤝 Contributing**  
 Contributions are welcome! Feel free to open issues or submit PRs.  
