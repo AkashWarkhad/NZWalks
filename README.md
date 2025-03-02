@@ -1,6 +1,6 @@
 
 # **NZWalks 🏞️**  
-A **full-stack web application** built with **ASP.NET Core Web API** and **Angular**, designed to help users explore and manage walking trails in New Zealand.  
+A **full-stack web application** built with **ASP.NET Core Web API** and **Controller View Model**, designed to help users explore and manage walking trails in New Zealand.  
 
 ## **📌 Project Overview**  
 NZWalks allows users to **browse, search, and manage walking trails**, providing key trail details, interactive maps, and secure authentication.  
