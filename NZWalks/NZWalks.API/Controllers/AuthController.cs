@@ -109,8 +109,10 @@ namespace NZWalks.API.Controllers
 
         private static bool IsNotValidRoles(string[] roles)
         {
-            if (roles.Length == 0 || roles.Length > 2)
+            if (roles != null || roles.Length == 0 || roles.Length > 2)
+            {
                 return true;
+            }
 
             return !(roles.All(role => role.Contains("Reader") || role.Contains("Writer")));
         }

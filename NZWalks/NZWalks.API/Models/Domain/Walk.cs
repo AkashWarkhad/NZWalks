@@ -13,14 +13,10 @@
         public string? WalkImageUrl { get; set; }
 
         public Guid DifficultyId { get; set; }
+        public Difficulty? Difficulty { get; set; } // Navigation Properties // So here .net is smart enough to relate this table
+
 
         public Guid RegionId { get; set; }
-
-
-        // Navigation Properties // So here .net is smart enough to relate this table
-
-        public Difficulty? Difficulty { get; set; }
-
-        public Region? Region { get; set; }
+        public Region? Region { get; set; } // Navigation Properties // So here .net is smart enough to relate this table
     }
 }

@@ -25,7 +25,7 @@ namespace NZWalks.API.Middlewares
                 var errorId = Guid.NewGuid();
                 logger.LogError(ex, $"{errorId}: {ex.Message}");
 
-                // Return Custome Error Response 
+                // Return Custom Error Response 
 
                 httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 httpContext.Response.ContentType = "application/json";
