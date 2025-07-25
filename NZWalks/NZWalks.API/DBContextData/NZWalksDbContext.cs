@@ -25,8 +25,6 @@ namespace NZWalks.API.Data
             .HasIndex(u => u.Code)
             .IsUnique();
 
-         
-
             // Seeding data for difficulties
             var difficulties = new List<Difficulty>()
             {
