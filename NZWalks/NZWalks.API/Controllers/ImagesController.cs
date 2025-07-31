@@ -43,6 +43,7 @@ namespace NZWalks.API.Controllers
 
                 // Save the image in the DB
                 var savedImage = await repository.UploadImageAsync(imageDomainModel);
+
                 logger.LogInformation($"{savedImage.FileName} image successfully saved in the database");
 
                 if (savedImage == null) 

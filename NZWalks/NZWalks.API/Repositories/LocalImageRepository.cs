@@ -20,10 +20,10 @@ namespace NZWalks.API.Repositories
 
         public async Task<Image> UploadImageAsync(Image image)
         {
+            // ContentRootPath > This is the root path of the application i.e Project file located
             var localFilePath = Path.Combine(webHostEnvironment.ContentRootPath, "Images", $"{image.FileName}{image.FileExtension}");
 
             // Upload image to the local path repository
-
             using var stream = new FileStream(localFilePath, FileMode.CreateNew);
 
             await image.File.CopyToAsync(stream);
