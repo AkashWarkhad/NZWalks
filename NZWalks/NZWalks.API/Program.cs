@@ -11,7 +11,6 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.FileProviders;
 using Serilog;
 using NZWalks.API.Middlewares;
-using FluentValidation.AspNetCore;
 using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
 
 //1111111111111111111111111111111111111111111 SeriLog Config 111111111111111111111111111111111111111111111111111
 // Configure Serilog Logger in the Services
@@ -30,13 +30,15 @@ var logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .CreateLogger();
 
-builder.Logging.ClearProviders();
-builder.Logging.AddSerilog(logger);
+builder.Logging.ClearProviders(); // Clears the default logging providers (like Console, Debug, etc.) so that only Serilog is used.
+
+builder.Logging.AddSerilog(logger); //Registers the Serilog logger as the main logging provider for the app.
 
 
 builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 
 //1111111111111111111111111111111111111111111 5.Authentication Scheme 111111111111111111111111111111111111111111111111111
 // Configuartion to display the Authentication on the Swagger Page Sp that user can authenticate on swagger itself
@@ -75,17 +77,21 @@ builder.Services.AddSwaggerGen(opt=>
     });
 });
 
+
 // Registering FluentValidator
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+
 
 // Registration of NZWalksDbContext
 builder.Services.AddDbContext<NZWalksDbContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalksConnectionString")));
 
+
 //1111111111111111111111111111111111111111111 3.Authentication Scheme 111111111111111111111111111111111111111111111111111
 // Registration of NZWalksAuthDbContext
 builder.Services.AddDbContext<NZWalksAuthDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalkAuthConnectionString")));
+
 
 //1111111111111111111111111111111111111111111 Register Services 111111111111111111111111111111111111111111111111111
 
@@ -95,8 +101,10 @@ builder.Services.AddScoped<IWalkRepository, SqlWalkRepository>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<IImageRepository, LocalImageRepository>();
 
+
 //1111111111111111111111111111111111111111111 AutoMapper Configuration 111111111111111111111111111111111111111111111111111
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+
 
 //1111111111111111111111111111111111111111111 4.Authentication Scheme 111111111111111111111111111111111111111111111111111
 // Register the Identity User
@@ -116,6 +124,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 });
 
+
 //1111111111111111111111111111111111111111111 1. Authentication Scheme 111111111111111111111111111111111111111111111111111
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt=> 
     opt.TokenValidationParameters = new TokenValidationParameters()
@@ -131,6 +140,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -138,22 +148,28 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Configured Exception Handler Middelware
+
+//1111111111111111111111111111111111111111111 Config Exception Handler Middelware 111111111111111111111111111111111111111111111111111
 app.UseMiddleware<ExceptionHandlerMiddelware>();
 
+
 app.UseHttpsRedirection();
+
 
 //1111111111111111111111111111111111111111111 2.Authentication Scheme 111111111111111111111111111111111111111111111111111
 // Authenticate User before Authorize
 app.UseAuthentication(); 
 app.UseAuthorization();
 
+
+//1111111111111111111111111111111111111111111 Static Image Config 111111111111111111111111111111111111111111111111111
 // This is help to show the static images outside on the Web
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Images")),
     RequestPath = "/Images"
 });
+
 
 app.MapControllers();
 

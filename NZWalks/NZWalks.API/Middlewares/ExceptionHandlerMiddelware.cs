@@ -21,7 +21,7 @@ namespace NZWalks.API.Middlewares
             }
             catch (Exception ex)
             {
-                // Logging
+                // Logging id
                 var errorId = Guid.NewGuid();
                 logger.LogError(ex, $"{errorId}: {ex.Message}");
 
@@ -33,7 +33,7 @@ namespace NZWalks.API.Middlewares
                 var errorResponse = new
                 {
                     Id = errorId,
-                    ErrorMessage = "Something Went wrong. we are looking into it... Thanks for ur patients."
+                    ErrorMessage = "Something Went wrong. we are looking into it... Thanks for ur patience."
                 };
 
                 await httpContext.Response.WriteAsJsonAsync(errorResponse);
