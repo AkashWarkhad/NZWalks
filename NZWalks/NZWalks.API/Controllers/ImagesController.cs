@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NZWalks.API.CustomActionFilters;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTO.Image;
 using NZWalks.API.Repositories;
@@ -25,6 +26,7 @@ namespace NZWalks.API.Controllers
         [HttpPost]
         [Route("Upload")]
         [Authorize(Roles = "Writer")]
+        [ValidateModelAttribute]
         public async Task<IActionResult> Upload([FromForm] ImageUploadRequestDto uploadImagesRequestDto)
         {
             ValidateFileUpload(uploadImagesRequestDto);
@@ -43,6 +45,7 @@ namespace NZWalks.API.Controllers
 
                 // Save the image in the DB
                 var savedImage = await repository.UploadImageAsync(imageDomainModel);
+
                 logger.LogInformation($"{savedImage.FileName} image successfully saved in the database");
 
                 if (savedImage == null) 
