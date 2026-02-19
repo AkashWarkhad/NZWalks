@@ -5,7 +5,6 @@ using NZWalks.API.Repositories;
 
 namespace NZWalks.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -23,9 +22,8 @@ namespace NZWalks.API.Controllers
         }
 
         // -------------------------------------- Register --------------------------------------------
-        // POST: https://localhost:7346/api/Auth/Register
-        [HttpPost]
-        [Route("Register")]
+        // POST: https://localhost:7346/Register
+        [HttpPost, Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto regReqDto)
         {
             if (regReqDto == null)
@@ -71,9 +69,8 @@ namespace NZWalks.API.Controllers
         }
 
         // ------------------------------------ Login -------------------------------------------------
-        // POST: https://localhost:7246/api/Auth/Login
-        [HttpPost]
-        [Route("Login")]
+        // POST: https://localhost:7246/Login
+        [HttpPost, Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto) 
         {
             // search a user by its emailAddress which user already authorized in the system
@@ -109,12 +106,12 @@ namespace NZWalks.API.Controllers
 
         private static bool IsNotValidRoles(string[] roles)
         {
-            if (roles != null || roles.Length == 0 || roles.Length > 2)
+            if (roles == null || roles.Length == 0 || roles.Length > 2)
             {
                 return true;
             }
 
-            return !(roles.All(role => role.Contains("Reader") || role.Contains("Writer")));
+            return !(roles.All(role => role.ToLower().Contains("reader") || role.ToLower().Contains("writer")));
         }
     }
 }

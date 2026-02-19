@@ -9,7 +9,6 @@ using NZWalks.API.Repositories;
 
 namespace NZWalks.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class WalksController : ControllerBase
     {
@@ -25,9 +24,9 @@ namespace NZWalks.API.Controllers
         }
 
         // --------------------------Get All Method -------------------------------------------
-        // GET: https://localhost:7285/api/Walks?filterOn=name&filterQuery=walks&sortBy=name&isAscending=true&pageNumber=1&pageSize=10
+        // GET: https://localhost:7285/GetAllWalks?filterOn=name&filterQuery=walks&sortBy=name&isAscending=true&pageNumber=1&pageSize=10
 
-        [HttpGet]
+        [HttpGet, Route("GetAllWalks")]
         [Authorize(Roles = "Reader,Writer")]
         public async Task<IActionResult> GetAllWalks(
             [FromQuery] string? filterOn,
@@ -58,10 +57,9 @@ namespace NZWalks.API.Controllers
         }
 
         // ----------------------- Get Id Method --------------------------------------------------
-        // GET: https://localhost/7265/api/Walks/id
+        // GET: https://localhost/7265/GetWalksById('{id}')
 
-        [HttpGet]
-        [Route("{id:Guid}")]
+        [HttpGet, Route("GetWalksById('{id:guid}')")]
         [Authorize(Roles = "Reader,Writer")]
         public async Task<IActionResult> GetWalksById([FromRoute] Guid id)
         {
@@ -81,9 +79,9 @@ namespace NZWalks.API.Controllers
 
         // -------------------------- Post Method -------------------------------------------
         // Create a Walks 
-        // POST : https://localhost:7285/api/Walks
+        // POST : https://localhost:7285/CreateWalk
 
-        [HttpPost]
+        [HttpPost, Route("CreateWalk")]
         [ValidateModelAttribute]
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateAsync([FromBody] AddWalkRequestsDto walkRequestsDto)
@@ -113,10 +111,9 @@ namespace NZWalks.API.Controllers
         }
 
         // ----------------------- Put Update Method -----------------------------------------------
-        // PUT: https://localhost:7265/api/Walks/id
+        // PUT: https://localhost:7265/UpdateWalkById('{id}')
 
-        [HttpPut]
-        [Route("{id:Guid}")]
+        [HttpPut, Route("UpdateWalkById('{id:guid}')")]
         [Authorize(Roles = "Writer")]
         [ValidateModelAttribute]
         public async Task<IActionResult> UpdateWalkById([FromRoute] Guid id, [FromBody] UpdateWalkRequestsDto updateWalks)
@@ -137,10 +134,9 @@ namespace NZWalks.API.Controllers
         }
 
         //  ----------------------- Delete Method By Id ----------------------------------------------------
-        // DELETE: https://localhost:7265/api/Walks/id
+        // DELETE: https://localhost:7265/DeleteWalksById('{id}')
 
-        [HttpDelete]
-        [Route("{id:guid}")]
+        [HttpDelete, Route("DeleteWalksById('{id:guid}')")]
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteWalksById([FromRoute] Guid id)
         {
