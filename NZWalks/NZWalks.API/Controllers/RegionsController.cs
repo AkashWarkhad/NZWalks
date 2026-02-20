@@ -86,7 +86,7 @@ namespace NZWalks.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorDetailsDto()
+                return StatusCode(StatusCodes.Status200OK, new ErrorDetailsDto()
                 {
                     ErrorCode = "Internal_Server_Error",
                     ErrorMessage = ex.Message + Environment.NewLine + ex.InnerException?.Message

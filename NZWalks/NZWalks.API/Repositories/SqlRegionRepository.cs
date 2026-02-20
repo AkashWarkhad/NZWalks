@@ -39,9 +39,9 @@ namespace NZWalks.API.Repositories
                 return null;
             }
 
-            existingRegionDomainModel.Code = region.Code;
-            existingRegionDomainModel.Name = region.Name;
-            existingRegionDomainModel.RegionImageUrl = region.RegionImageUrl;
+            existingRegionDomainModel.Code = region.Code ?? existingRegionDomainModel.Code;
+            existingRegionDomainModel.Name = region.Name ?? existingRegionDomainModel.Name;
+            existingRegionDomainModel.RegionImageUrl = region.RegionImageUrl ?? existingRegionDomainModel.RegionImageUrl;
 
             await _dbContext.SaveChangesAsync();
             return existingRegionDomainModel;

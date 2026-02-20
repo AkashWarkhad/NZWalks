@@ -13,6 +13,15 @@ using Serilog;
 using NZWalks.API.Middlewares;
 using FluentValidation;
 
+/* ##############################  Improvements Scope in this Project ##############################
+ * 
+ * ############# 1> Add Swagger Examples.
+ * ############# 2> Write a Unit test for this project
+ * ############# 3> Write a Integration test for this project (containerised Test)
+ * ############# 4> Think of including AI feature In it
+ * ############# 5> Refactoring to improve the code base
+ */
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

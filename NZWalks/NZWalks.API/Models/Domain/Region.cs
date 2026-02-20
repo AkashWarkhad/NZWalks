@@ -1,7 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.EntityFrameworkCore;
-
-namespace NZWalks.API.Models.Domain
+﻿namespace NZWalks.API.Models.Domain
 {
     public class Region
     {
