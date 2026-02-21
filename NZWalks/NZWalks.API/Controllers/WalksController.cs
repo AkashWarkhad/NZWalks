@@ -14,13 +14,13 @@ namespace NZWalks.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IWalkRepository _walkRepository;
-        private readonly Logger<WalksController> logger;
+        private readonly ILogger<WalksController> _logger;
 
-        public WalksController(IMapper mapper, IWalkRepository walkRepository, Logger<WalksController> logger)
+        public WalksController(IMapper mapper, IWalkRepository walkRepository, ILogger<WalksController> logger)
         {
             _mapper = mapper;
             _walkRepository = walkRepository;
-            this.logger = logger;
+            _logger = logger;
         }
 
         // --------------------------Get All Method -------------------------------------------
@@ -46,7 +46,7 @@ namespace NZWalks.API.Controllers
 
             if (walksDomainModel == null)
             {
-                logger.LogWarning("Record not found !!!");
+                _logger.LogWarning("Record not found !!!");
                 return NotFound("Record not found !!");
             }
 

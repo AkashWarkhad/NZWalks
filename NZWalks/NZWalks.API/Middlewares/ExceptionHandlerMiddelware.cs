@@ -32,8 +32,8 @@ namespace NZWalks.API.Middlewares
 
                 var errorResponse = new
                 {
-                    Id = errorId,
-                    ErrorMessage = "Something Went wrong. we are looking into it... Thanks for ur patience."
+                    ErrorCode = "ServerError_UnexpectedState",
+                    ErrorMessage = $"Exception : {ex.Message}. We are looking into it... Thanks for ur patience. " 
                 };
 
                 await httpContext.Response.WriteAsJsonAsync(errorResponse);

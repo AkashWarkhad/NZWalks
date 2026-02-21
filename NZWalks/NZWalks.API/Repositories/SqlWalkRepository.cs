@@ -111,12 +111,12 @@ namespace NZWalks.API.Repositories
 
             if (existingWalks == null) return null;
 
-            existingWalks.Name = walkDomainModel.Name;
-            existingWalks.Description = walkDomainModel.Description;
-            existingWalks.LengthInKm = walkDomainModel.LengthInKm;
+            existingWalks.Name = walkDomainModel.Name ?? existingWalks.Name;
+            existingWalks.Description = walkDomainModel.Description ?? existingWalks.Description;
+            existingWalks.LengthInKm = walkDomainModel.LengthInKm ?? existingWalks.LengthInKm;
             existingWalks.RegionId = walkDomainModel.RegionId;
             existingWalks.DifficultyId = walkDomainModel.DifficultyId;
-            existingWalks.WalkImageUrl = walkDomainModel.WalkImageUrl;
+            existingWalks.WalkImageUrl = walkDomainModel.WalkImageUrl ?? existingWalks.WalkImageUrl;
 
             await _dbContext.SaveChangesAsync();
             return existingWalks;
