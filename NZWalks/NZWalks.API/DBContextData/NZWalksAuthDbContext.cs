@@ -14,7 +14,6 @@ namespace NZWalks.API.DBContextData
         {
             base.OnModelCreating(builder); // Ensures configurations from the base DbContext class (like IdentityDbContext) are not lost or overridden.
 
-
             var readeRoleId = "78aa5093-9702-449d-a59e-439b84392793";
             var writerRoleId = "88aa5093-9702-449d-a59e-439b84392794";
 

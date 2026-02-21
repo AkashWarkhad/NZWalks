@@ -31,7 +31,7 @@ namespace NZWalks.API.Repositories
             }
 
             // Created A Key
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
 
             // Created a Credentails
             var credentails = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -41,7 +41,7 @@ namespace NZWalks.API.Repositories
                 configuration["Jwt:Issuer"],
                 configuration["Jwt:Audience"],
                 claims,
-                expires: DateTime.Now.AddMinutes(150),
+                expires: DateTime.Now.AddDays(10),
                 signingCredentials: credentails);
 
             // return Token

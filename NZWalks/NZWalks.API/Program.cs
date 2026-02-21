@@ -52,7 +52,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 
 //1111111111111111111111111111111111111111111 5.Authentication Scheme 111111111111111111111111111111111111111111111111111
-// Configuartion to display the Authentication on the Swagger Page Sp that user can authenticate on swagger itself
+// Configuartion to display the Authentication on the Swagger Page So that user can authenticate on swagger itself
 builder.Services.AddSwaggerGen(opt=>
 {
     opt.SwaggerDoc("v1", new OpenApiInfo
@@ -95,14 +95,14 @@ builder.Services.AddValidatorsFromAssemblyContaining<AddRegionRequestDto>();
 
 
 // Registration of NZWalksDbContext
-builder.Services.AddDbContext<NZWalksDbContext>(options => 
-options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalksConnectionString")));
+builder.Services.AddDbContext<NZWalksDbContext>
+    (options => options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalksConnectionString")));
 
 
 //1111111111111111111111111111111111111111111 3.Authentication Scheme 111111111111111111111111111111111111111111111111111
 // Registration of NZWalksAuthDbContext
-builder.Services.AddDbContext<NZWalksAuthDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalkAuthConnectionString")));
+builder.Services.AddDbContext<NZWalksAuthDbContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalkAuthConnectionString")));
 
 
 //1111111111111111111111111111111111111111111 Register Services 111111111111111111111111111111111111111111111111111

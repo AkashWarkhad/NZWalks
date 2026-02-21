@@ -61,7 +61,7 @@ namespace NZWalks.API.Controllers
         {
             var allowedExtensions = new string[] { ".jpg", ".png", ".jpeg" };
 
-            if (allowedExtensions.Contains(Path.GetExtension(requestDto.File.FileName)) == false)
+            if (!allowedExtensions.Contains(Path.GetExtension(requestDto.File.FileName)))
             {
                 ModelState.AddModelError("File", "Unsupported File Extension");
             }

@@ -113,7 +113,7 @@ namespace NZWalks.API.Repositories
 
             existingWalks.Name = walkDomainModel.Name ?? existingWalks.Name;
             existingWalks.Description = walkDomainModel.Description ?? existingWalks.Description;
-            existingWalks.LengthInKm = walkDomainModel.LengthInKm ?? existingWalks.LengthInKm;
+            existingWalks.LengthInKm = walkDomainModel.LengthInKm != 0 ? walkDomainModel.LengthInKm : existingWalks.LengthInKm;
             existingWalks.RegionId = walkDomainModel.RegionId;
             existingWalks.DifficultyId = walkDomainModel.DifficultyId;
             existingWalks.WalkImageUrl = walkDomainModel.WalkImageUrl ?? existingWalks.WalkImageUrl;

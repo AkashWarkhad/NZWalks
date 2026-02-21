@@ -10,12 +10,12 @@ namespace NZWalks.API.Repositories
         private readonly NZWalksDbContext dbContext;
 
         public LocalImageRepository(IWebHostEnvironment webHostEnvironment,
-            IHttpContextAccessor httpContextAccessor, 
+            IHttpContextAccessor httpContextAccessor,
             NZWalksDbContext nZWalksDbContext)
         {
             this.webHostEnvironment = webHostEnvironment;
             this.httpContextAccessor = httpContextAccessor;
-            this.dbContext = nZWalksDbContext;
+            dbContext = nZWalksDbContext;
         }
 
         public async Task<Image> UploadImageAsync(Image image)
