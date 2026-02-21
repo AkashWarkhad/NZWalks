@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using System.Threading.Tasks;
 using Web_API_Versioning.API;
 
 var builder = WebApplication.CreateBuilder(args);
