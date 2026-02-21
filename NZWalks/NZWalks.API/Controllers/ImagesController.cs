@@ -6,7 +6,6 @@ using NZWalks.API.Repositories;
 
 namespace NZWalks.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class ImagesController : ControllerBase
     {
@@ -20,10 +19,9 @@ namespace NZWalks.API.Controllers
         }
 
         // -------------------------------------- Upload Image ------------------------------------------------
-        // POST : https://localhost:1234/api/Images/Upload
+        // POST : https://localhost:1234/StoreImage
 
-        [HttpPost]
-        [Route("Upload")]
+        [HttpPost, Route("StoreImage")]
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Upload([FromForm] ImageUploadRequestDto uploadImagesRequestDto)
         {
@@ -63,7 +61,7 @@ namespace NZWalks.API.Controllers
         {
             var allowedExtensions = new string[] { ".jpg", ".png", ".jpeg" };
 
-            if (allowedExtensions.Contains(Path.GetExtension(requestDto.File.FileName)) == false)
+            if (!allowedExtensions.Contains(Path.GetExtension(requestDto.File.FileName)))
             {
                 ModelState.AddModelError("File", "Unsupported File Extension");
             }

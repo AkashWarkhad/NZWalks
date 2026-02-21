@@ -12,6 +12,17 @@ using Microsoft.Extensions.FileProviders;
 using Serilog;
 using NZWalks.API.Middlewares;
 using FluentValidation;
+using NZWalks.API.Models.DTO.Regions;
+using FluentValidation.AspNetCore;
+
+/* ##############################  Improvements Scope in this Project ##############################
+ * 
+ * ############# 1> Add Swagger Examples.
+ * ############# 2> Write a Unit test for this project
+ * ############# 3> Write a Integration test for this project (containerised Test)
+ * ############# 4> Think of including AI feature In it
+ * ############# 5> Refactoring to improve the code base
+ */
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +52,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 
 //1111111111111111111111111111111111111111111 5.Authentication Scheme 111111111111111111111111111111111111111111111111111
-// Configuartion to display the Authentication on the Swagger Page Sp that user can authenticate on swagger itself
+// Configuartion to display the Authentication on the Swagger Page So that user can authenticate on swagger itself
 builder.Services.AddSwaggerGen(opt=>
 {
     opt.SwaggerDoc("v1", new OpenApiInfo
@@ -79,18 +90,19 @@ builder.Services.AddSwaggerGen(opt=>
 
 
 // Registering FluentValidator
-builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<AddRegionRequestDto>();
 
 
 // Registration of NZWalksDbContext
-builder.Services.AddDbContext<NZWalksDbContext>(options => 
-options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalksConnectionString")));
+builder.Services.AddDbContext<NZWalksDbContext>
+    (options => options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalksConnectionString")));
 
 
 //1111111111111111111111111111111111111111111 3.Authentication Scheme 111111111111111111111111111111111111111111111111111
 // Registration of NZWalksAuthDbContext
-builder.Services.AddDbContext<NZWalksAuthDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalkAuthConnectionString")));
+builder.Services.AddDbContext<NZWalksAuthDbContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalkAuthConnectionString")));
 
 
 //1111111111111111111111111111111111111111111 Register Services 111111111111111111111111111111111111111111111111111

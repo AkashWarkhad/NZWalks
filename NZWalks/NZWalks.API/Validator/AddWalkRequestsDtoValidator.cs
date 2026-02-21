@@ -7,8 +7,10 @@ namespace NZWalks.API.Validator
     {
         public AddWalkRequestsDtoValidator()
         {
-            RuleFor(x => x.Name).NotEmpty();
-            RuleFor(x => x.Description).NotEmpty();
+            RuleFor(x => x.Name).NotNull().NotEmpty();
+
+            RuleFor(x => x.Description).NotNull().NotEmpty();
+
             RuleFor(x=> x.LengthInKm).GreaterThan(0);
         }
     }

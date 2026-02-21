@@ -10,7 +10,6 @@ using System.Text.Json;
 
 namespace NZWalks.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class RegionsController : ControllerBase
     {
@@ -29,8 +28,8 @@ namespace NZWalks.API.Controllers
         }
 
         // ----------------------------------------GET All Regions --------------------------------------------------------
-        // GET: https://localhost:1234/api/Regions
-        [HttpGet]
+        // GET: https://localhost:1234/Regions
+        [HttpGet, Route("GetAllRegions")]
         [Authorize(Roles = "Reader,Writer")]
         public async Task<ActionResult> GetAll()
         {
@@ -51,10 +50,9 @@ namespace NZWalks.API.Controllers
 
         //---------------------------------------- Get Region By Id ------------------------------------------------------------
         // Improve error handling
-        // GET: https://localhost:1234/api/Regions/Id
+        // GET: https://localhost:1234/GetRegionById('{id}')
 
-        [HttpGet]
-        [Route("{id:Guid}")]
+        [HttpGet, Route("GetRegionById('{id:guid}')")]
         [Authorize(Roles = "Reader,Writer")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
@@ -71,10 +69,10 @@ namespace NZWalks.API.Controllers
         }
 
         //----------------------- POST METHODS -----------------------------
-        // Post: https://localhost:1223/api/regions
-        
-        [HttpPost]
-        [ValidateModelAttribute]
+        // Post: https://localhost:1223/CreateRegion
+
+        [HttpPost, Route("CreateRegion")]
+        [ValidateModel]
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto requestDto)
         {
@@ -88,7 +86,7 @@ namespace NZWalks.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorDetailsDto()
+                return StatusCode(StatusCodes.Status200OK, new ErrorDetailsDto()
                 {
                     ErrorCode = "Internal_Server_Error",
                     ErrorMessage = ex.Message + Environment.NewLine + ex.InnerException?.Message
@@ -103,11 +101,10 @@ namespace NZWalks.API.Controllers
         }
 
         //----------------------- PUT METHOD ---------------------------
-        // PUT: https://localhost:1223/api/regions/id
+        // PUT: https://localhost:1223/UpdateRegionById('{id}')
 
-        [HttpPut]
-        [Route("{id:Guid}")]
-        [ValidateModelAttribute]
+        [HttpPut, Route("UpdateRegionById('{id:guid}')")]
+        [ValidateModel]
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRequestDto)
         {
@@ -135,10 +132,9 @@ namespace NZWalks.API.Controllers
         }
 
         //----------------------- DELETE METHOD ----------------------
-        // DELETE https://localhost:1234/api/regions/id
+        // DELETE https://localhost:1234/DeleteRegionById('{id}')
 
-        [HttpDelete]
-        [Route("{id:Guid}")]
+        [HttpDelete, Route("DeleteRegionById('{id:guid}')")]
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
