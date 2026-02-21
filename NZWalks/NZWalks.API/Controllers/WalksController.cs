@@ -46,8 +46,8 @@ namespace NZWalks.API.Controllers
 
             if (walksDomainModel == null)
             {
-                logger.LogWarning("Sorry to inconvenience record not found !!!");
-                return NotFound();
+                logger.LogWarning("Record not found !!!");
+                return NotFound("Record not found !!");
             }
 
             // Convert Walks Domain Model into DTO
@@ -82,7 +82,7 @@ namespace NZWalks.API.Controllers
         // POST : https://localhost:7285/CreateWalk
 
         [HttpPost, Route("CreateWalk")]
-        [ValidateModelAttribute]
+        [ValidateModel]
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateAsync([FromBody] AddWalkRequestsDto walkRequestsDto)
         {
@@ -115,7 +115,7 @@ namespace NZWalks.API.Controllers
 
         [HttpPut, Route("UpdateWalkById('{id:guid}')")]
         [Authorize(Roles = "Writer")]
-        [ValidateModelAttribute]
+        [ValidateModel]
         public async Task<IActionResult> UpdateWalkById([FromRoute] Guid id, [FromBody] UpdateWalkRequestsDto updateWalks)
         {
             // Convert Dto to Domain models

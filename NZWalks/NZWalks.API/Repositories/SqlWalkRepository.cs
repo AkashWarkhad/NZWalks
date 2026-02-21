@@ -55,26 +55,26 @@ namespace NZWalks.API.Repositories
                 var walks = _dbContext.Walks.Include("Difficulty").Include("Region").AsQueryable();
 
                 // Filtering based on column & query
-                if (string.IsNullOrEmpty(filterOn) == false && string.IsNullOrEmpty(filterQuery) == false)
+                if (!string.IsNullOrEmpty(filterOn) && !string.IsNullOrEmpty(filterQuery))
                 {
                     if (filterOn.Equals("name", StringComparison.OrdinalIgnoreCase))
                     {
                         walks = walks.Where(x => x.Name.Contains(filterQuery));
                     }
-                    else
+                    else if (filterOn.Equals("lengthInKm", StringComparison.OrdinalIgnoreCase))
                     {
-                        walks = null;
+                        walks = walks.Where(x=> x.LengthInKm.ToString() == filterQuery);
                     }
                 }
 
                 // Sorting
-                if (string.IsNullOrEmpty(sortBy) == false && walks != null)
+                if (!string.IsNullOrEmpty(sortBy) && walks != null && walks.Any())
                 {
                     if (sortBy.Equals("name", StringComparison.OrdinalIgnoreCase))
                     {
                         walks = isAscending == true ? walks.OrderBy(x => x.Name) : walks.OrderByDescending(x => x.Name);
                     }
-                    else if(sortBy.Equals("LengthInKm", StringComparison.OrdinalIgnoreCase))
+                    else if(sortBy.Equals("lengthInKm", StringComparison.OrdinalIgnoreCase))
                     {
                         walks = isAscending == true ? walks.OrderBy(x => x.LengthInKm) : walks.OrderByDescending(x => x.LengthInKm);
                     }
@@ -83,7 +83,7 @@ namespace NZWalks.API.Repositories
                 // Pagination
                 var skipResult = (pageNumber - 1) * pageSize;
 
-                return walks != null ? await walks.Skip(skipResult).Take(pageSize).ToListAsync() : null;
+                return walks != null && walks.Any() ? await walks.Skip(skipResult).Take(pageSize).ToListAsync() : null;
             }
             catch (Exception ex)
             {

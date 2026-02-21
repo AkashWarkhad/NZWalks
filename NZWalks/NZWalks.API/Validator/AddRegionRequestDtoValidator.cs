@@ -7,8 +7,13 @@ namespace NZWalks.API.Validator
     {
         public AddRegionRequestDtoValidator()
         {
-            RuleFor(x=> x.Name).NotEmpty();
-            RuleFor(x => x.Code).NotEmpty();
+            RuleFor(x=> x.Name)
+                .NotNull()
+                .NotEmpty();
+
+            RuleFor(x => x.Code)
+                .NotNull()
+                .NotEmpty();
         }
     }
 }

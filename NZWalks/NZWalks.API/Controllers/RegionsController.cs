@@ -72,7 +72,7 @@ namespace NZWalks.API.Controllers
         // Post: https://localhost:1223/CreateRegion
 
         [HttpPost, Route("CreateRegion")]
-        [ValidateModelAttribute]
+        [ValidateModel]
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto requestDto)
         {
@@ -104,7 +104,7 @@ namespace NZWalks.API.Controllers
         // PUT: https://localhost:1223/UpdateRegionById('{id}')
 
         [HttpPut, Route("UpdateRegionById('{id:guid}')")]
-        [ValidateModelAttribute]
+        [ValidateModel]
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRequestDto)
         {

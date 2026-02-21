@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace NZWalks.API.CustomActionFilters
@@ -8,7 +7,7 @@ namespace NZWalks.API.CustomActionFilters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (context.ModelState.IsValid == false) 
+            if (!context.ModelState.IsValid)
             {
                 context.Result = new BadRequestResult();
             }

@@ -12,6 +12,8 @@ using Microsoft.Extensions.FileProviders;
 using Serilog;
 using NZWalks.API.Middlewares;
 using FluentValidation;
+using NZWalks.API.Models.DTO.Regions;
+using FluentValidation.AspNetCore;
 
 /* ##############################  Improvements Scope in this Project ##############################
  * 
@@ -88,7 +90,8 @@ builder.Services.AddSwaggerGen(opt=>
 
 
 // Registering FluentValidator
-builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<AddRegionRequestDto>();
 
 
 // Registration of NZWalksDbContext
