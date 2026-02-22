@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Web_API_Versioning.API;
 using Web_API_Versioning.API.MapperProfiles;
 
@@ -14,6 +15,11 @@ builder.Services.AddApiVersioning(opt=>
     opt.AssumeDefaultVersionWhenUnspecified = true;
     opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
     opt.ReportApiVersions = true;
+
+    opt.ApiVersionReader = ApiVersionReader.Combine(
+        new UrlSegmentApiVersionReader(),              // URI versioning
+        new QueryStringApiVersionReader("version")     // Query versioning
+    );
 });
 
 //111111111111111111111111111111111111 Register AutoMapper 111111111111111111111111111111111111

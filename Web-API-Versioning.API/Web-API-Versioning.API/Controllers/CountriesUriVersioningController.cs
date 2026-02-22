@@ -23,7 +23,7 @@ namespace Web_API_Versioning.API.Controllers
         [MapToApiVersion("1.0")]
         public ActionResult<List<CountryDtoV1>> GetVersion1()
         {
-            var countryDomainModel = CountryDomainModelsData;
+            var countryDomainModel = ControllerHelper.GetCountryDomainModelsData();
 
             // Convert Domain model into Dto
             var countryDto = mapper.Map<List<CountryDtoV1>>(countryDomainModel);
@@ -36,41 +36,12 @@ namespace Web_API_Versioning.API.Controllers
         [MapToApiVersion("2.0")]
         public ActionResult<List<CountryDtoV2>> GetVersion2()
         {
-            var countryDomainModel = CountryDomainModelsData;
+            var countryDomainModel = ControllerHelper.GetCountryDomainModelsData();
 
             // Convert Domain model into Dto
             var countryDto = mapper.Map<List<CountryDtoV2>>(countryDomainModel);
-            
+
             return Ok(countryDto);
         }
-
-        private List<Country> CountryDomainModelsData => 
-            [
-                new Country()
-                {
-                    ID = 1,
-                    Name = "India"
-                },
-                new Country()
-                {
-                    ID = 2,
-                    Name = "USA"
-                },
-                new Country()
-                {
-                    ID = 3,
-                    Name = "Indonesia"
-                },
-                new Country()
-                {
-                    ID = 4,
-                    Name = "France"
-                },
-                new Country()
-                {
-                    ID = 5,
-                    Name = "Russia"
-                }
-            ];
     }
 }
