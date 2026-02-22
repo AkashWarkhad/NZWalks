@@ -1,7 +1,6 @@
-﻿
-using Web_API_Versioning.API.Models.Domain;
+﻿using Web_API_Versioning.API.Models.Domain;
 
-namespace Web_API_Versioning.API.Controllers
+namespace Web_API_Versioning.API.Controllers.Helper
 {
     public static class ControllerHelper
     {

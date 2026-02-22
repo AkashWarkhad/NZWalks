@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Web_API_Versioning.API;
+using Web_API_Versioning.API.Controllers.Helper;
 using Web_API_Versioning.API.MapperProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,9 +17,13 @@ builder.Services.AddApiVersioning(opt=>
     opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
     opt.ReportApiVersions = true;
 
+    // This configuration allows the API to read the version information from multiple sources,
+    // providing flexibility in how clients can specify the API version they want to use.
+
     opt.ApiVersionReader = ApiVersionReader.Combine(
-        new UrlSegmentApiVersionReader(),              // URI versioning
-        new QueryStringApiVersionReader("version")     // Query versioning
+        new UrlSegmentApiVersionReader(),              // ############  URI versioning   ############         
+        new QueryStringApiVersionReader("version"),    // ############  Query versioning  ############
+        new HeaderApiVersionReader("X-Version")        // ############  Header versioning ############
     );
 });
 
@@ -35,7 +40,16 @@ builder.Services.AddVersionedApiExplorer(opt =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(opt => 
+{
+    opt.AddSecurityDefinition("AppVersion", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "X-Version",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "API versioning header"
+    });
+});
 
 // Configure the Swagger options for version
 // This ensures Swagger will generate a separate UI and JSON file for each API version defined in your controllers.
@@ -69,3 +83,12 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
+
+
+/* 
+    Important Concept
+
+    Versioning style is NOT tied to controller.It is tied to ApiVersionReader. Since we (ApiVersionReader.Combine()) combined readers.
+    So that why Swagger displays both.
+    "User can pass version using query OR header."
+*/

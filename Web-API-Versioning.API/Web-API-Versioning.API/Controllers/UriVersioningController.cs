@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Web_API_Versioning.API.Controllers.Helper;
 using Web_API_Versioning.API.Models.Domain;
 using Web_API_Versioning.API.Models.DTO;
 
@@ -9,17 +10,17 @@ namespace Web_API_Versioning.API.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [ApiVersion("2.0")]
-    public class CountriesUriVersioningController : ControllerBase
+    public class UriVersioningController : ControllerBase
     {
         private readonly IMapper mapper;
 
-        public CountriesUriVersioningController(IMapper mapper)
+        public UriVersioningController(IMapper mapper)
         {
             this.mapper = mapper;
         }
 
         // --------------------------- Version V1 with Country -------------------------------------
-        [HttpGet("GetVersion1")]
+        [HttpGet("UriVersioning")]
         [MapToApiVersion("1.0")]
         public ActionResult<List<CountryDtoV1>> GetVersion1()
         {
@@ -32,7 +33,7 @@ namespace Web_API_Versioning.API.Controllers
         }
 
         // -------------------------------------- Version V2 with Country name ---------------------------------------
-        [HttpGet("GetVersion2")]
+        [HttpGet("UriVersioning")]
         [MapToApiVersion("2.0")]
         public ActionResult<List<CountryDtoV2>> GetVersion2()
         {
