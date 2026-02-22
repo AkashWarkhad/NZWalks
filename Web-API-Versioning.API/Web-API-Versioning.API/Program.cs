@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Web_API_Versioning.API;
+using Web_API_Versioning.API.MapperProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddApiVersioning(opt=>
     opt.ReportApiVersions = true;
 });
 
+//111111111111111111111111111111111111 Register AutoMapper 111111111111111111111111111111111111
+builder.Services.AddAutoMapper(typeof(CountriesMappingProfile));
 
 //111111111111111111111111111111111111 Cofigure Api Versioning on Swagger 111111111111111111111111111111111111
 // Configures API Explorer to group Swagger docs by version (e.g., v1) and automatically insert the API version into route URLs.
@@ -56,8 +59,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 
