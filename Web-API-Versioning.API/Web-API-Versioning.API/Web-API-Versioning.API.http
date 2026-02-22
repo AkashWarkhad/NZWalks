@@ -1,9 +1,9 @@
 @host = https://localhost:7263
 
+### HTTP V1 Request
 GET {{host}}/api/v1/Contries
-Accept: */*
 
-### HTTP Request
+
+### HTTP V2 Request
 GET {{host}}/api/v2/Contries
 
-###

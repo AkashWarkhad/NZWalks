@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Web_API_Versioning.API;
+using Web_API_Versioning.API.Controllers.Helper;
+using Web_API_Versioning.API.MapperProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +16,19 @@ builder.Services.AddApiVersioning(opt=>
     opt.AssumeDefaultVersionWhenUnspecified = true;
     opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
     opt.ReportApiVersions = true;
+
+    // This configuration allows the API to read the version information from multiple sources,
+    // providing flexibility in how clients can specify the API version they want to use.
+
+    opt.ApiVersionReader = ApiVersionReader.Combine(
+        new UrlSegmentApiVersionReader(),              // ############  URI versioning   ############         
+        new QueryStringApiVersionReader("version"),    // ############  Query versioning  ############
+        new HeaderApiVersionReader("X-Version")        // ############  Header versioning ############
+    );
 });
 
+//111111111111111111111111111111111111 Register AutoMapper 111111111111111111111111111111111111
+builder.Services.AddAutoMapper(typeof(CountriesMappingProfile));
 
 //111111111111111111111111111111111111 Cofigure Api Versioning on Swagger 111111111111111111111111111111111111
 // Configures API Explorer to group Swagger docs by version (e.g., v1) and automatically insert the API version into route URLs.
@@ -27,7 +40,16 @@ builder.Services.AddVersionedApiExplorer(opt =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(opt => 
+{
+    opt.AddSecurityDefinition("AppVersion", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "X-Version",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "API versioning header"
+    });
+});
 
 // Configure the Swagger options for version
 // This ensures Swagger will generate a separate UI and JSON file for each API version defined in your controllers.
@@ -58,8 +80,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
+
+
+/* 
+    Important Concept
+
+    Versioning style is NOT tied to controller.It is tied to ApiVersionReader. Since we (ApiVersionReader.Combine()) combined readers.
+    So that why Swagger displays both.
+    "User can pass version using query OR header."
+*/
