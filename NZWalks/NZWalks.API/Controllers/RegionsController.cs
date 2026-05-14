@@ -151,5 +151,29 @@ namespace NZWalks.API.Controllers
             // Convert Domain model to Dto Model & return Result
             return Ok(_mapper.Map<RegionDto>(regionDomain));
         }
+
+        //----------------------- HEAD METHOD ----------------------
+        //HEAD https://localhost:44343/Header('f3a1c2d4-7b89-4f2e-9c11-8d3e5a7b6c90')
+        
+        [HttpHead, Route("Header('{id:guid}')")]
+        public IActionResult HeadUser([FromRoute] Guid id)
+        {
+            // HTTP HEAD is an HTTP method similar to GET, but it only returns the headers of the response — not the actual response body/content.
+            return Ok("Header Method was invoked");
+        }
+        
+        //----------------------- OPTIONS METHOD ----------------------
+        //OPTIONS https://localhost:44343/Header('f3a1c2d4-7b89-4f2e-9c11-8d3e5a7b6c90')
+        // HTTP OPTIONS is used to ask the server: “What operations/methods are allowed on this endpoint?”
+       
+        /*
+        [HttpOptions]
+        public IActionResult GetOptions()
+        {
+            Response.Headers.Append("Allow", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+            return Ok();
+        }
+        */
+        
     }
 }
