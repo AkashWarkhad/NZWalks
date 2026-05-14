@@ -28,7 +28,7 @@ namespace NZWalks.API.Controllers
         }
 
         // ----------------------------------------GET All Regions --------------------------------------------------------
-        // GET: https://localhost:1234/Regions
+        // GET: https://localhost:1234/GetAllRegions
         [HttpGet, Route("GetAllRegions")]
         [Authorize(Roles = "Reader,Writer")]
         public async Task<ActionResult> GetAll()
@@ -134,7 +134,9 @@ namespace NZWalks.API.Controllers
         //----------------------- DELETE METHOD ----------------------
         // DELETE https://localhost:1234/DeleteRegionById('{id}')
 
-        [HttpDelete, Route("DeleteRegionById('{id:guid}')")]
+        //[HttpDelete("{id:guid}")] // If you defined route like this way then you can see URL : https://localhost:44343/f3a1c2d4-7b89-4f2e-9c11-8d3e5a7b6c90
+
+        [HttpDelete, Route("DeleteRegionById('{id:guid}')")] // If you define this way you can see URL : https://localhost:44343/DeleteRegionById('f3a1c2d4-7b89-4f2e-9c11-8d3e5a7b6c90')
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
