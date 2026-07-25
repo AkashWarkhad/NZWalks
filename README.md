@@ -16,6 +16,7 @@ NZWalks allows users to **browse, search, and manage walking trails**, providing
 ✅ **Swagger & Postman Testing** – API documentation and testing using **Swagger UI & Postman**.  
 ✅ **Secure Deployment** – Deployed using **Azure**.  
 ✅ **Logging** – **Serilog** for error tracking and debugging.  
+✅ **Unit Tested** – Controller logic covered with **xUnit, Moq, and FluentAssertions**.  
 
 ## **🛠 Tech Stack**  
 🔹 **Backend:** ASP.NET Core Web API (.NET 8), Entity Framework Core  
@@ -26,7 +27,8 @@ NZWalks allows users to **browse, search, and manage walking trails**, providing
 🔹 **Validation:** FluentValidation  
 🔹 **Utilities:** Automapper, Swagger, Postman  
 🔹 **Deployment & DevOps:** Azure
-🔹 **Monitoring & Logging:** Serilog
+🔹 **Monitoring & Logging:** Serilog  
+🔹 **Testing:** xUnit, Moq, FluentAssertions
 
 ## **🚀 Getting Started**  
 
@@ -45,6 +47,12 @@ dotnet ef database update
 - Start the API:  
 ```bash
 dotnet run
+```
+
+### **3️⃣ Run Tests**  
+```bash
+cd NZWalks
+dotnet test
 ```
 
 ## **🤝 Contributing**  
