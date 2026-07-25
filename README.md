@@ -26,7 +26,7 @@ NZWalks allows users to **browse, search, and manage walking trails**, providing
 🔹 **Authentication:** JWT, ASP.NET Core Identity, Role-Based Authorization  
 🔹 **Validation:** FluentValidation  
 🔹 **Utilities:** Automapper, Swagger, Postman  
-🔹 **Deployment & DevOps:** Azure
+🔹 **Deployment & DevOps:** Azure 
 🔹 **Monitoring & Logging:** Serilog  
 🔹 **Testing:** xUnit, Moq, FluentAssertions
 
