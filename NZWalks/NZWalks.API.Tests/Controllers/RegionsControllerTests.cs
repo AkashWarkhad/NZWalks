@@ -7,7 +7,6 @@ using NZWalks.API.Controllers;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTO.Regions;
 using NZWalks.API.Repositories;
-using Xunit;
 
 namespace NZWalks.API.Tests.Controllers
 {
